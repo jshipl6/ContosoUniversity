@@ -1,0 +1,11 @@
+﻿@model ContosoUniversity.Models.Student
+<tr>
+    <td>@Model.Id</td>
+    <td>@Model.FullName</td>
+    <td>@Model.EnrollmentDate.ToString("yyyy-MM-dd")</td>
+    <td class="text-end">
+        <a class="btn btn-sm btn-outline-secondary me-1" asp-page="./Details" asp-route-id="@Model.Id">Details</a>
+        <a class="btn btn-sm btn-outline-warning me-1" asp-page="./Edit" asp-route-id="@Model.Id">Edit</a>
+        <a class="btn btn-sm btn-outline-danger" asp-page="./Delete" asp-route-id="@Model.Id">Delete</a>
+    </td>
+</tr>

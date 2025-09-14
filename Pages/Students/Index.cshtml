@@ -1,0 +1,38 @@
+﻿@page
+@model ContosoUniversity.Pages.Students.IndexModel
+@{
+    ViewData["Title"] = "Students";
+}
+
+<h1 class="display-6">Students</h1>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <form class="d-flex" method="get" role="search" aria-label="Filter students">
+        <label for="q" class="visually-hidden">Search by name</label>
+        <input id="q" name="q" value="@Model.Query" class="form-control me-2" type="search" placeholder="Search by name" />
+        <button class="btn btn-outline-primary" type="submit">Search</button>
+        @if (!string.IsNullOrWhiteSpace(Model.Query))
+        {
+            <a class="btn btn-link ms-2" asp-page="./Index">Clear</a>
+        }
+    </form>
+
+    <a class="btn btn-primary" asp-page="./Create">+ New Student</a>
+</div>
+
+<table class="table table-striped align-middle">
+    <thead>
+        <tr>
+            <th style="width:6rem;">Id</th>
+            <th>Name</th>
+            <th style="width:12rem;">Enrolled</th>
+            <th style="width:16rem;"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var s in Model.Students)
+        {
+            @await Html.PartialAsync("_StudentRow", s)
+        }
+    </tbody>
+</table>

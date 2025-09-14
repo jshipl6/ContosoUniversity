@@ -1,0 +1,27 @@
+﻿# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build output
+bin/
+obj/
+**/bin/
+**/obj/
+
+# VS tooling caches
+/.idea/
+/.vscode/
+
+# Logs
+*.log
+
+# SQLite DB (local dev)
+*.db
+*.db-shm
+*.db-wal
+
+# Publish artifacts
+*.publish.xml

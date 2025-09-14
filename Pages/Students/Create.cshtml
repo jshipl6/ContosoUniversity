@@ -1,0 +1,34 @@
+﻿@page "{id:int}"
+@model ContosoUniversity.Pages.Students.EditModel
+@{
+    ViewData["Title"] = "Edit Student";
+}
+<h1 class="display-6">Edit Student</h1>
+<hr />
+<form method="post">
+    <input type="hidden" asp-for="Student.Id" />
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="Student.FirstName" class="form-label"></label>
+        <input asp-for="Student.FirstName" class="form-control" />
+        <span asp-validation-for="Student.FirstName" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Student.LastName" class="form-label"></label>
+        <input asp-for="Student.LastName" class="form-control" />
+        <span asp-validation-for="Student.LastName" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Student.EnrollmentDate" class="form-label"></label>
+        <input asp-for="Student.EnrollmentDate" class="form-control" />
+        <span asp-validation-for="Student.EnrollmentDate" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a class="btn btn-outline-secondary ms-2" asp-page="./Index">Back</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
