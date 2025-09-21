@@ -37,9 +37,11 @@
 
     <div class="container my-4" id="main">
         <main role="main">
+            @await Html.PartialAsync("_StatusMessage")
             @RenderBody()
         </main>
     </div>
+
 
     <footer class="border-top py-3">
         <div class="container text-muted small">

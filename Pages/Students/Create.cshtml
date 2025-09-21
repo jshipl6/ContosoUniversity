@@ -1,32 +1,31 @@
-﻿@page "{id:int}"
-@model ContosoUniversity.Pages.Students.EditModel
+﻿@page
+@model ContosoUniversity.Pages.Students.CreateModel
 @{
-    ViewData["Title"] = "Edit Student";
+    ViewData["Title"] = "Create Student";
 }
-<h1 class="display-6">Edit Student</h1>
+<h1 class="display-6">Create Student</h1>
 <hr />
 <form method="post">
-    <input type="hidden" asp-for="Student.Id" />
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div asp-validation-summary="ModelOnly" class="text-danger" aria-live="polite"></div>
 
     <div class="mb-3">
-        <label asp-for="Student.FirstName" class="form-label"></label>
-        <input asp-for="Student.FirstName" class="form-control" />
-        <span asp-validation-for="Student.FirstName" class="text-danger"></span>
+        <label asp-for="Input.FirstName" class="form-label"></label>
+        <input asp-for="Input.FirstName" class="form-control" />
+        <span asp-validation-for="Input.FirstName" class="text-danger"></span>
     </div>
     <div class="mb-3">
-        <label asp-for="Student.LastName" class="form-label"></label>
-        <input asp-for="Student.LastName" class="form-control" />
-        <span asp-validation-for="Student.LastName" class="text-danger"></span>
+        <label asp-for="Input.LastName" class="form-label"></label>
+        <input asp-for="Input.LastName" class="form-control" />
+        <span asp-validation-for="Input.LastName" class="text-danger"></span>
     </div>
     <div class="mb-3">
-        <label asp-for="Student.EnrollmentDate" class="form-label"></label>
-        <input asp-for="Student.EnrollmentDate" class="form-control" />
-        <span asp-validation-for="Student.EnrollmentDate" class="text-danger"></span>
+        <label asp-for="Input.EnrollmentDate" class="form-label"></label>
+        <input asp-for="Input.EnrollmentDate" class="form-control" />
+        <span asp-validation-for="Input.EnrollmentDate" class="text-danger"></span>
     </div>
 
     <button type="submit" class="btn btn-primary">Save</button>
-    <a class="btn btn-outline-secondary ms-2" asp-page="./Index">Back</a>
+    <a class="btn btn-outline-secondary ms-2" asp-page="./Index">Cancel</a>
 </form>
 
 @section Scripts {

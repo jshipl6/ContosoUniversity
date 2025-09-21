@@ -1,7 +1,9 @@
 ﻿using ContosoUniversity.Data;
 using ContosoUniversity.Models;
+using ContosoUniversity.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace ContosoUniversity.Pages.Students;
 
@@ -11,27 +13,36 @@ public class EditModel : PageModel
     public EditModel(SchoolContext db) => _db = db;
 
     [BindProperty]
-    public Student Student { get; set; } = new();
+    public StudentInputModel Input { get; set; } = new();
 
     public async Task<IActionResult> OnGetAsync(int id)
     {
-        var s = await _db.Students.FindAsync(id);
+        var s = await _db.Students.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
         if (s is null) return NotFound();
-        Student = s;
+
+        Input = new StudentInputModel
+        {
+            Id = s.Id,
+            FirstName = s.FirstName,
+            LastName = s.LastName,
+            EnrollmentDate = s.EnrollmentDate
+        };
         return Page();
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
         if (!ModelState.IsValid) return Page();
-        var exists = await _db.Students.FindAsync(Student.Id);
-        if (exists is null) return NotFound();
 
-        exists.FirstName = Student.FirstName;
-        exists.LastName = Student.LastName;
-        exists.EnrollmentDate = Student.EnrollmentDate;
+        var s = await _db.Students.FindAsync(Input.Id);
+        if (s is null) return NotFound();
 
+        s.FirstName = Input.FirstName;
+        s.LastName = Input.LastName;
+        s.EnrollmentDate = Input.EnrollmentDate;
         await _db.SaveChangesAsync();
+
+        TempData["StatusMessage"] = $"Student “{s.LastName}, {s.FirstName}” updated.";
         return RedirectToPage("./Index");
     }
 }

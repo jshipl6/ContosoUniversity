@@ -8,10 +8,10 @@
 
 <div class="d-flex justify-content-between align-items-center mb-3">
     <form class="d-flex" method="get" role="search" aria-label="Filter students">
-        <label for="q" class="visually-hidden">Search by name</label>
-        <input id="q" name="q" value="@Model.Query" class="form-control me-2" type="search" placeholder="Search by name" />
+        <label class="visually-hidden" for="q">Search by name</label>
+        <input id="q" name="q" class="form-control me-2" type="search" value="@Model.Q" placeholder="Search by name" />
         <button class="btn btn-outline-primary" type="submit">Search</button>
-        @if (!string.IsNullOrWhiteSpace(Model.Query))
+        @if (!string.IsNullOrWhiteSpace(Model.Q))
         {
             <a class="btn btn-link ms-2" asp-page="./Index">Clear</a>
         }
@@ -24,15 +24,51 @@
     <thead>
         <tr>
             <th style="width:6rem;">Id</th>
-            <th>Name</th>
-            <th style="width:12rem;">Enrolled</th>
+            <th>
+                <a asp-page="./Index" asp-route-sort="@Model.NameSortParam" asp-route-q="@Model.Q">Name</a>
+            </th>
+            <th style="width:12rem;">
+                <a asp-page="./Index" asp-route-sort="@Model.DateSortParam" asp-route-q="@Model.Q">Enrolled</a>
+            </th>
             <th style="width:16rem;"></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var s in Model.Students)
         {
-            @await Html.PartialAsync("_StudentRow", s)
+            <tr>
+                <td>@s.Id</td>
+                <td>@s.LastName, @s.FirstName</td>
+                <td>@s.EnrollmentDate.ToString("yyyy-MM-dd")</td>
+                <td class="text-end">
+                    <a class="btn btn-sm btn-outline-secondary me-1" asp-page="./Details" asp-route-id="@s.Id">Details</a>
+                    <a class="btn btn-sm btn-outline-warning me-1" asp-page="./Edit" asp-route-id="@s.Id">Edit</a>
+                    <a class="btn btn-sm btn-outline-danger" asp-page="./Delete" asp-route-id="@s.Id">Delete</a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>
+
+@if (Model.Students.TotalPages > 1)
+{
+    <nav aria-label="Student pages">
+        <ul class="pagination">
+            <li class="page-item @(Model.Students.HasPreviousPage ? "" : "disabled")">
+                <a class="page-link" asp-page="./Index" asp-route-page="@(Model.Students.PageIndex - 1)"
+                   asp-route-sort="@Model.Sort" asp-route-q="@Model.Q">Previous</a>
+            </li>
+            @for (var i = 1; i <= Model.Students.TotalPages; i++)
+            {
+                <li class="page-item @(i == Model.Students.PageIndex ? "active" : "")">
+                    <a class="page-link" asp-page="./Index" asp-route-page="@i"
+                       asp-route-sort="@Model.Sort" asp-route-q="@Model.Q">@i</a>
+                </li>
+            }
+            <li class="page-item @(Model.Students.HasNextPage ? "" : "disabled")">
+                <a class="page-link" asp-page="./Index" asp-route-page="@(Model.Students.PageIndex + 1)"
+                   asp-route-sort="@Model.Sort" asp-route-q="@Model.Q">Next</a>
+            </li>
+        </ul>
+    </nav>
+}

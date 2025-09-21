@@ -1,6 +1,34 @@
-﻿namespace ContosoUniversity.Pages.Students
-{
-    public class Edit
-    {
-    }
+﻿@page "{id:int}"
+@model ContosoUniversity.Pages.Students.EditModel
+@{
+    ViewData["Title"] = "Edit Student";
+}
+<h1 class="display-6">Edit Student</h1>
+<hr />
+<form method="post">
+    <input type="hidden" asp-for="Input.Id" />
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="Input.FirstName" class="form-label"></label>
+        <input asp-for="Input.FirstName" class="form-control" />
+        <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Input.LastName" class="form-label"></label>
+        <input asp-for="Input.LastName" class="form-control" />
+        <span asp-validation-for="Input.LastName" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Input.EnrollmentDate" class="form-label"></label>
+        <input asp-for="Input.EnrollmentDate" class="form-control" />
+        <span asp-validation-for="Input.EnrollmentDate" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a class="btn btn-outline-secondary ms-2" asp-page="./Index">Back</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 }
