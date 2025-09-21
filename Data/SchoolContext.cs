@@ -7,9 +7,9 @@ public class SchoolContext : DbContext
 {
     public SchoolContext(DbContextOptions<SchoolContext> options) : base(options) { }
 
-    public DbSet<Student> Students => Set<Student>();
-    public DbSet<Course> Courses => Set<Course>();
-    public DbSet<Enrollment> Enrollments => Set<Enrollment>();
+    public DbSet<Student> Students { get; set; } = default!;
+    public DbSet<Enrollment> Enrollments { get; set; } = default!;
+    public DbSet<Course> Courses { get; set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

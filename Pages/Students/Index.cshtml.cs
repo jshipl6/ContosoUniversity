@@ -1,7 +1,6 @@
 ﻿using ContosoUniversity.Data;
 using ContosoUniversity.Infrastructure;
 using ContosoUniversity.Models;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,47 +8,64 @@ namespace ContosoUniversity.Pages.Students;
 
 public class IndexModel : PageModel
 {
-    private readonly SchoolContext _db;
-    public IndexModel(SchoolContext db) => _db = db;
+    private readonly SchoolContext _context;
+    private readonly int _pageSize;
 
-    // Query string bound inputs
-    [BindProperty(SupportsGet = true)] public string? Q { get; set; }           // filter text
-    [BindProperty(SupportsGet = true)] public string? Sort { get; set; }        // "name" | "name_desc" | "date" | "date_desc"
-    [BindProperty(SupportsGet = true)] public int? Page { get; set; }           // page index (1-based)
-
-    // header link helpers
-    public string NameSortParam => Sort == "name" ? "name_desc" : "name";
-    public string DateSortParam => Sort == "date" ? "date_desc" : "date";
-
-    // Data
-    public PaginatedList<Student> Students { get; private set; } = default!;
-
-    public async Task OnGetAsync()
+    // IConfiguration is resolved by DI automatically
+    public IndexModel(SchoolContext context, IConfiguration configuration)
     {
-        var query = _db.Students.AsNoTracking();
+        _context = context;
+        _pageSize = configuration.GetValue<int>("PageSize", 4); // tutorial defaults to 3/4; choose 4 if config is missing
+    }
+
+    public string NameSort { get; set; } = "";
+    public string DateSort { get; set; } = "";
+    public string CurrentFilter { get; set; } = "";
+    public string CurrentSort { get; set; } = "";
+
+    public PaginatedList<Student> Students { get; set; } = default!;
+
+    public async Task OnGetAsync(string? sortOrder, string? currentFilter, string? searchString, int? pageIndex)
+    {
+        CurrentSort = sortOrder ?? string.Empty;
+        NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+        DateSort = sortOrder == "Date" ? "date_desc" : "Date";
+
+        // New search resets to first page
+        if (searchString != null)
+        {
+            pageIndex = 1;
+        }
+        else
+        {
+            searchString = currentFilter;
+        }
+
+        CurrentFilter = searchString ?? string.Empty;
+
+        IQueryable<Student> studentsIQ = _context.Students;
 
         // FILTER
-        if (!string.IsNullOrWhiteSpace(Q))
+        if (!string.IsNullOrWhiteSpace(searchString))
         {
-            var term = Q.Trim().ToLower();
-            query = query.Where(s => s.FirstName.ToLower().Contains(term) ||
-                                     s.LastName.ToLower().Contains(term));
+            studentsIQ = studentsIQ.Where(s =>
+                s.LastName.Contains(searchString) ||
+                s.FirstName.Contains(searchString));
         }
 
         // SORT
-        query = Sort switch
+        studentsIQ = sortOrder switch
         {
-            "name" => query.OrderBy(s => s.LastName).ThenBy(s => s.FirstName),
-            "name_desc" => query.OrderByDescending(s => s.LastName).ThenByDescending(s => s.FirstName),
-            "date" => query.OrderBy(s => s.EnrollmentDate),
-            "date_desc" => query.OrderByDescending(s => s.EnrollmentDate),
-            _ => query.OrderBy(s => s.LastName).ThenBy(s => s.FirstName)
+            "name_desc" => studentsIQ.OrderByDescending(s => s.LastName),
+            "Date" => studentsIQ.OrderBy(s => s.EnrollmentDate),
+            "date_desc" => studentsIQ.OrderByDescending(s => s.EnrollmentDate),
+            _ => studentsIQ.OrderBy(s => s.LastName)
         };
 
         // PAGING
-        int pageIndex = Page.GetValueOrDefault(1);
-        const int pageSize = 5;
-
-        Students = await PaginatedList<Student>.CreateAsync(query, pageIndex, pageSize);
+        var page = pageIndex ?? 1;
+        var pageSize = _pageSize; // read from config
+        Students = await PaginatedList<Student>.CreateAsync(
+            studentsIQ.AsNoTracking(), page, pageSize);
     }
 }

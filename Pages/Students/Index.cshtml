@@ -4,71 +4,82 @@
     ViewData["Title"] = "Students";
 }
 
-<h1 class="display-6">Students</h1>
+<h2>Students</h2>
 
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <form class="d-flex" method="get" role="search" aria-label="Filter students">
-        <label class="visually-hidden" for="q">Search by name</label>
-        <input id="q" name="q" class="form-control me-2" type="search" value="@Model.Q" placeholder="Search by name" />
-        <button class="btn btn-outline-primary" type="submit">Search</button>
-        @if (!string.IsNullOrWhiteSpace(Model.Q))
-        {
-            <a class="btn btn-link ms-2" asp-page="./Index">Clear</a>
-        }
-    </form>
+<p>
+    <a asp-page="./Create">Create New</a>
+</p>
 
-    <a class="btn btn-primary" asp-page="./Create">+ New Student</a>
-</div>
+<form asp-page="./Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by name:
+            <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+            <input type="submit" value="Search" class="btn btn-primary" /> |
+            <a asp-page="./Index">Back to full List</a>
+        </p>
+    </div>
+</form>
 
-<table class="table table-striped align-middle">
+<table class="table">
     <thead>
         <tr>
-            <th style="width:6rem;">Id</th>
             <th>
-                <a asp-page="./Index" asp-route-sort="@Model.NameSortParam" asp-route-q="@Model.Q">Name</a>
+                <a asp-page="./Index"
+                   asp-route-sortOrder="@Model.NameSort"
+                   asp-route-currentFilter="@Model.CurrentFilter">
+                    @* tutorial uses DisplayNameFor(model => model.Students[0].LastName) *@
+                    LastName
+                </a>
             </th>
-            <th style="width:12rem;">
-                <a asp-page="./Index" asp-route-sort="@Model.DateSortParam" asp-route-q="@Model.Q">Enrolled</a>
+            <th>
+                @* Tutorial column name; we bind to FirstName *@
+                FirstMidName
             </th>
-            <th style="width:16rem;"></th>
+            <th>
+                <a asp-page="./Index"
+                   asp-route-sortOrder="@Model.DateSort"
+                   asp-route-currentFilter="@Model.CurrentFilter">
+                    EnrollmentDate
+                </a>
+            </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var s in Model.Students)
+        @foreach (var item in Model.Students)
         {
             <tr>
-                <td>@s.Id</td>
-                <td>@s.LastName, @s.FirstName</td>
-                <td>@s.EnrollmentDate.ToString("yyyy-MM-dd")</td>
-                <td class="text-end">
-                    <a class="btn btn-sm btn-outline-secondary me-1" asp-page="./Details" asp-route-id="@s.Id">Details</a>
-                    <a class="btn btn-sm btn-outline-warning me-1" asp-page="./Edit" asp-route-id="@s.Id">Edit</a>
-                    <a class="btn btn-sm btn-outline-danger" asp-page="./Delete" asp-route-id="@s.Id">Delete</a>
+                <td>@item.LastName</td>
+                <td>@item.FirstName</td>
+                <td>@item.EnrollmentDate.ToString("g")</td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
 
-@if (Model.Students.TotalPages > 1)
-{
-    <nav aria-label="Student pages">
-        <ul class="pagination">
-            <li class="page-item @(Model.Students.HasPreviousPage ? "" : "disabled")">
-                <a class="page-link" asp-page="./Index" asp-route-page="@(Model.Students.PageIndex - 1)"
-                   asp-route-sort="@Model.Sort" asp-route-q="@Model.Q">Previous</a>
-            </li>
-            @for (var i = 1; i <= Model.Students.TotalPages; i++)
-            {
-                <li class="page-item @(i == Model.Students.PageIndex ? "active" : "")">
-                    <a class="page-link" asp-page="./Index" asp-route-page="@i"
-                       asp-route-sort="@Model.Sort" asp-route-q="@Model.Q">@i</a>
-                </li>
-            }
-            <li class="page-item @(Model.Students.HasNextPage ? "" : "disabled")">
-                <a class="page-link" asp-page="./Index" asp-route-page="@(Model.Students.PageIndex + 1)"
-                   asp-route-sort="@Model.Sort" asp-route-q="@Model.Q">Next</a>
-            </li>
-        </ul>
-    </nav>
+@{
+    var prevDisabled = !Model.Students.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.Students.HasNextPage ? "disabled" : "";
 }
+
+<a asp-page="./Index"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.Students.PageIndex - 1)"
+   asp-route-currentFilter="@Model.CurrentFilter"
+   class="btn btn-primary @prevDisabled">
+    Previous
+</a>
+
+<a asp-page="./Index"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.Students.PageIndex + 1)"
+   asp-route-currentFilter="@Model.CurrentFilter"
+   class="btn btn-primary @nextDisabled">
+    Next
+</a>

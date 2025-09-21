@@ -8,7 +8,7 @@ builder.Services.AddRazorPages();
 
 // EF Core (SQLite)
 builder.Services.AddDbContext<SchoolContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlite(builder.Configuration.GetConnectionString("SchoolContext")));
 
 var app = builder.Build();
 
