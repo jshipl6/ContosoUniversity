@@ -1,0 +1,43 @@
+﻿@page
+@model ContosoUniversity.Pages.Instructors.IndexModel
+@{
+    ViewData["Title"] = "Instructors";
+}
+
+<h2>Instructors</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Last name</th>
+            <th>First name</th>
+            <th>Office</th>
+            <th>Courses</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Instructors)
+        {
+            <tr>
+                <td>@item.LastName</td>
+                <td>@item.FirstMidName</td>
+                <td>@(item.OfficeAssignment?.Location ?? "")</td>
+                <td>
+                    <ul class="list-unstyled mb-0">
+                        @foreach (var ca in item.CourseAssignments ?? Enumerable.Empty<ContosoUniversity.Models.CourseAssignment>())
+                        {
+                            <li>
+                                @ca.Course!.Title
+                                <small class="text-muted">(@ca.Course.Department?.Name)</small>
+                            </li>
+                        }
+                    </ul>
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

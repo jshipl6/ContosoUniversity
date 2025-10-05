@@ -1,0 +1,21 @@
+﻿@page
+@model ContosoUniversity.Pages.Data.ExportModel
+@{
+    ViewData["Title"] = "Export XML";
+}
+
+<h2>Export XML</h2>
+
+<p>This creates an XML file using the same schema as <code>Data/seed.xml</code>.</p>
+
+<ul>
+    <li>Students: @Model.StudentCount</li>
+    <li>Instructors: @Model.InstructorCount</li>
+    <li>Departments: @Model.DepartmentCount</li>
+    <li>Courses: @Model.CourseCount</li>
+    <li>Enrollments: @Model.EnrollmentCount</li>
+</ul>
+
+<form method="post" asp-page-handler="Download">
+    <button class="btn btn-primary">Download seed-export.xml</button>
+</form>

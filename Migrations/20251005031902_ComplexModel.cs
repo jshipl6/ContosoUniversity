@@ -5,7 +5,7 @@
 namespace ContosoUniversity.Migrations
 {
     /// <inheritdoc />
-    public partial class AddStudents : Migration
+    public partial class ComplexModel : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

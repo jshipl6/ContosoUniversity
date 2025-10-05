@@ -7,19 +7,24 @@ public class SchoolContext : DbContext
 {
     public SchoolContext(DbContextOptions<SchoolContext> options) : base(options) { }
 
-    public DbSet<Student> Students { get; set; } = default!;
-    public DbSet<Enrollment> Enrollments { get; set; } = default!;
-    public DbSet<Course> Courses { get; set; } = default!;
+    public DbSet<Student> Students => Set<Student>();
+    public DbSet<Instructor> Instructors => Set<Instructor>();
+    public DbSet<Department> Departments => Set<Department>();
+    public DbSet<Course> Courses => Set<Course>();
+    public DbSet<Enrollment> Enrollments => Set<Enrollment>();
+    public DbSet<OfficeAssignment> OfficeAssignments => Set<OfficeAssignment>();
+    public DbSet<CourseAssignment> CourseAssignments => Set<CourseAssignment>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
-        // Seed a few rows so the UI isn’t empty on first run
-        modelBuilder.Entity<Student>().HasData(
-            new Student { Id = 1, FirstName = "Ada", LastName = "Lovelace", EnrollmentDate = new DateTime(2024, 9, 1) },
-            new Student { Id = 2, FirstName = "Alan", LastName = "Turing", EnrollmentDate = new DateTime(2024, 9, 1) },
-            new Student { Id = 3, FirstName = "Grace", LastName = "Hopper", EnrollmentDate = new DateTime(2024, 9, 1) }
-        );
+        modelBuilder.Entity<CourseAssignment>()
+            .HasKey(ca => new { ca.CourseID, ca.InstructorID });
+
+        modelBuilder.Entity<OfficeAssignment>()
+            .HasOne(o => o.Instructor)
+            .WithOne(i => i.OfficeAssignment!)
+            .HasForeignKey<OfficeAssignment>(o => o.InstructorID);
     }
 }

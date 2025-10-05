@@ -1,0 +1,32 @@
+﻿@page "{id:int}"
+@model ContosoUniversity.Pages.Departments.EditModel
+@{
+    ViewData["Title"] = "Edit Department";
+}
+<h2>Edit Department</h2>
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="Department.Name" class="form-label"></label>
+        <input asp-for="Department.Name" class="form-control" />
+        <span asp-validation-for="Department.Name" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Department.Budget" class="form-label"></label>
+        <input asp-for="Department.Budget" class="form-control" />
+        <span asp-validation-for="Department.Budget" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Department.StartDate" class="form-label"></label>
+        <input asp-for="Department.StartDate" class="form-control" />
+        <span asp-validation-for="Department.StartDate" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Administrator</label>
+        <select asp-for="Department.AdministratorID" asp-items="Model.Instructors" class="form-select">
+            <option value="">None</option>
+        </select>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Save</button>
+    <a asp-page="./Index" class="btn btn-secondary">Back</a>
+</form>

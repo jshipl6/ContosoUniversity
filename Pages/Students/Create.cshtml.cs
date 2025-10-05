@@ -26,7 +26,7 @@ public class CreateModel : PageModel
 
         var entity = new Student
         {
-            FirstName = Input.FirstName,
+            FirstMidName = Input.FirstName,
             LastName = Input.LastName,
             EnrollmentDate = Input.EnrollmentDate
         };
@@ -34,7 +34,7 @@ public class CreateModel : PageModel
         _db.Students.Add(entity);
         await _db.SaveChangesAsync();
 
-        TempData["StatusMessage"] = $"Student “{entity.LastName}, {entity.FirstName}” created.";
+        TempData["StatusMessage"] = $"Student “{entity.LastName}, {entity.FirstMidName}” created.";
         // PRG: avoid double-post, redirect to Index
         return RedirectToPage("./Index");
     }

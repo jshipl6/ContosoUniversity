@@ -1,0 +1,233 @@
+<Seed>
+	<Students>
+		<Student id="s0">
+			<FirstName>Carson</FirstName>
+			<LastName>Alexander</LastName>
+			<EnrollmentDate>2016-09-01</EnrollmentDate>
+		</Student>
+		<Student id="s1">
+			<FirstName>Meredith</FirstName>
+			<LastName>Alonso</LastName>
+			<EnrollmentDate>2018-09-01</EnrollmentDate>
+		</Student>
+		<Student id="s2">
+			<FirstName>Arturo</FirstName>
+			<LastName>Anand</LastName>
+			<EnrollmentDate>2019-09-01</EnrollmentDate>
+		</Student>
+		<Student id="s3">
+			<FirstName>Gytis</FirstName>
+			<LastName>Barzdukas</LastName>
+			<EnrollmentDate>2018-09-01</EnrollmentDate>
+		</Student>
+		<Student id="s4">
+			<FirstName>Yan</FirstName>
+			<LastName>Li</LastName>
+			<EnrollmentDate>2018-09-01</EnrollmentDate>
+		</Student>
+		<Student id="s5">
+			<FirstName>Peggy</FirstName>
+			<LastName>Justice</LastName>
+			<EnrollmentDate>2017-09-01</EnrollmentDate>
+		</Student>
+		<Student id="s6">
+			<FirstName>Laura</FirstName>
+			<LastName>Norman</LastName>
+			<EnrollmentDate>2019-09-01</EnrollmentDate>
+		</Student>
+		<Student id="s7">
+			<FirstName>Nino</FirstName>
+			<LastName>Olivetto</LastName>
+			<EnrollmentDate>2011-09-01</EnrollmentDate>
+		</Student>
+	</Students>
+	<Instructors>
+		<Instructor id="i0">
+			<FirstName>Kim</FirstName>
+			<LastName>Abercrombie</LastName>
+			<HireDate>1995-03-11</HireDate>
+		</Instructor>
+		<Instructor id="i1">
+			<FirstName>Fadi</FirstName>
+			<LastName>Fakhouri</LastName>
+			<HireDate>2002-07-06</HireDate>
+		</Instructor>
+		<Instructor id="i2">
+			<FirstName>Roger</FirstName>
+			<LastName>Harui</LastName>
+			<HireDate>1998-07-01</HireDate>
+		</Instructor>
+		<Instructor id="i3">
+			<FirstName>Candace</FirstName>
+			<LastName>Kapoor</LastName>
+			<HireDate>2001-01-15</HireDate>
+		</Instructor>
+		<Instructor id="i4">
+			<FirstName>Roger</FirstName>
+			<LastName>Zheng</LastName>
+			<HireDate>2004-02-12</HireDate>
+		</Instructor>
+	</Instructors>
+	<OfficeAssignments>
+		<OfficeAssignment>
+			<InstructorRef>i1</InstructorRef>
+			<Location>Smith 17</Location>
+		</OfficeAssignment>
+		<OfficeAssignment>
+			<InstructorRef>i2</InstructorRef>
+			<Location>Gowan 27</Location>
+		</OfficeAssignment>
+		<OfficeAssignment>
+			<InstructorRef>i3</InstructorRef>
+			<Location>Thompson 304</Location>
+		</OfficeAssignment>
+	</OfficeAssignments>
+	<Departments>
+		<Department id="d0">
+			<Name>English</Name>
+			<Budget>350000</Budget>
+			<StartDate>2007-09-01</StartDate>
+			<AdministratorRef>i0</AdministratorRef>
+		</Department>
+		<Department id="d1">
+			<Name>Mathematics</Name>
+			<Budget>100000</Budget>
+			<StartDate>2007-09-01</StartDate>
+			<AdministratorRef>i1</AdministratorRef>
+		</Department>
+		<Department id="d2">
+			<Name>Engineering</Name>
+			<Budget>350000</Budget>
+			<StartDate>2007-09-01</StartDate>
+			<AdministratorRef>i2</AdministratorRef>
+		</Department>
+		<Department id="d3">
+			<Name>Economics</Name>
+			<Budget>100000</Budget>
+			<StartDate>2007-09-01</StartDate>
+			<AdministratorRef>i3</AdministratorRef>
+		</Department>
+	</Departments>
+	<Courses>
+		<Course>
+			<CourseID>1050</CourseID>
+			<Title>Chemistry</Title>
+			<Credits>3</Credits>
+			<DepartmentRef>d2</DepartmentRef>
+			<InstructorRefs>
+				<InstructorRef>i3</InstructorRef>
+				<InstructorRef>i2</InstructorRef>
+			</InstructorRefs>
+		</Course>
+		<Course>
+			<CourseID>4022</CourseID>
+			<Title>Microeconomics</Title>
+			<Credits>3</Credits>
+			<DepartmentRef>d3</DepartmentRef>
+			<InstructorRefs>
+				<InstructorRef>i4</InstructorRef>
+			</InstructorRefs>
+		</Course>
+		<Course>
+			<CourseID>4041</CourseID>
+			<Title>Macroeconomics</Title>
+			<Credits>3</Credits>
+			<DepartmentRef>d3</DepartmentRef>
+			<InstructorRefs>
+				<InstructorRef>i4</InstructorRef>
+			</InstructorRefs>
+		</Course>
+		<Course>
+			<CourseID>1045</CourseID>
+			<Title>Calculus</Title>
+			<Credits>4</Credits>
+			<DepartmentRef>d1</DepartmentRef>
+			<InstructorRefs>
+				<InstructorRef>i1</InstructorRef>
+			</InstructorRefs>
+		</Course>
+		<Course>
+			<CourseID>3141</CourseID>
+			<Title>Trigonometry</Title>
+			<Credits>4</Credits>
+			<DepartmentRef>d1</DepartmentRef>
+			<InstructorRefs>
+				<InstructorRef>i2</InstructorRef>
+			</InstructorRefs>
+		</Course>
+		<Course>
+			<CourseID>2021</CourseID>
+			<Title>Composition</Title>
+			<Credits>3</Credits>
+			<DepartmentRef>d0</DepartmentRef>
+			<InstructorRefs>
+				<InstructorRef>i0</InstructorRef>
+			</InstructorRefs>
+		</Course>
+		<Course>
+			<CourseID>2042</CourseID>
+			<Title>Literature</Title>
+			<Credits>4</Credits>
+			<DepartmentRef>d0</DepartmentRef>
+			<InstructorRefs>
+				<InstructorRef>i0</InstructorRef>
+			</InstructorRefs>
+		</Course>
+	</Courses>
+	<Enrollments>
+		<Enrollment>
+			<StudentRef>s0</StudentRef>
+			<CourseRef>1050</CourseRef>
+			<Grade>A</Grade>
+		</Enrollment>
+		<Enrollment>
+			<StudentRef>s0</StudentRef>
+			<CourseRef>4022</CourseRef>
+			<Grade>C</Grade>
+		</Enrollment>
+		<Enrollment>
+			<StudentRef>s0</StudentRef>
+			<CourseRef>4041</CourseRef>
+			<Grade>B</Grade>
+		</Enrollment>
+		<Enrollment>
+			<StudentRef>s1</StudentRef>
+			<CourseRef>1045</CourseRef>
+			<Grade>B</Grade>
+		</Enrollment>
+		<Enrollment>
+			<StudentRef>s1</StudentRef>
+			<CourseRef>3141</CourseRef>
+			<Grade>B</Grade>
+		</Enrollment>
+		<Enrollment>
+			<StudentRef>s1</StudentRef>
+			<CourseRef>2021</CourseRef>
+			<Grade>B</Grade>
+		</Enrollment>
+		<Enrollment>
+			<StudentRef>s2</StudentRef>
+			<CourseRef>1050</CourseRef>
+		</Enrollment>
+		<Enrollment>
+			<StudentRef>s2</StudentRef>
+			<CourseRef>4022</CourseRef>
+			<Grade>B</Grade>
+		</Enrollment>
+		<Enrollment>
+			<StudentRef>s3</StudentRef>
+			<CourseRef>1050</CourseRef>
+			<Grade>B</Grade>
+		</Enrollment>
+		<Enrollment>
+			<StudentRef>s4</StudentRef>
+			<CourseRef>2021</CourseRef>
+			<Grade>B</Grade>
+		</Enrollment>
+		<Enrollment>
+			<StudentRef>s5</StudentRef>
+			<CourseRef>2042</CourseRef>
+			<Grade>B</Grade>
+		</Enrollment>
+	</Enrollments>
+</Seed>

@@ -50,7 +50,7 @@ public class IndexModel : PageModel
         {
             studentsIQ = studentsIQ.Where(s =>
                 s.LastName.Contains(searchString) ||
-                s.FirstName.Contains(searchString));
+                s.FirstMidName.Contains(searchString));
         }
 
         // SORT

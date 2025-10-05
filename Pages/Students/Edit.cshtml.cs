@@ -17,13 +17,13 @@ public class EditModel : PageModel
 
     public async Task<IActionResult> OnGetAsync(int id)
     {
-        var s = await _db.Students.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        var s = await _db.Students.AsNoTracking().FirstOrDefaultAsync(x => x.ID == id);
         if (s is null) return NotFound();
 
         Input = new StudentInputModel
         {
-            Id = s.Id,
-            FirstName = s.FirstName,
+            Id = s.ID,
+            FirstName = s.FirstMidName,
             LastName = s.LastName,
             EnrollmentDate = s.EnrollmentDate
         };
@@ -37,12 +37,12 @@ public class EditModel : PageModel
         var s = await _db.Students.FindAsync(Input.Id);
         if (s is null) return NotFound();
 
-        s.FirstName = Input.FirstName;
+        s.FirstMidName = Input.FirstName;
         s.LastName = Input.LastName;
         s.EnrollmentDate = Input.EnrollmentDate;
         await _db.SaveChangesAsync();
 
-        TempData["StatusMessage"] = $"Student “{s.LastName}, {s.FirstName}” updated.";
+        TempData["StatusMessage"] = $"Student “{s.LastName}, {s.FirstMidName}” updated.";
         return RedirectToPage("./Index");
     }
 }

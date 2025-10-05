@@ -1,14 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace ContosoUniversity.Models;
+﻿namespace ContosoUniversity.Models;
 
 public class Course
 {
-    public int Id { get; set; }
-
-    [Required, StringLength(100)]
-    public string Title { get; set; } = string.Empty;
-
-    [Range(0, 10)]
+    public int CourseID { get; set; }
+    public string Title { get; set; } = "";
     public int Credits { get; set; }
+
+    public int DepartmentID { get; set; }
+    public Department? Department { get; set; }
+
+    public ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
+    public ICollection<CourseAssignment> CourseAssignments { get; set; } = new List<CourseAssignment>();
 }

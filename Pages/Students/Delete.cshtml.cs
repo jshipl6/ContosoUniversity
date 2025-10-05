@@ -23,7 +23,7 @@ public class DeleteModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var s = await _db.Students.FindAsync(Student.Id);
+        var s = await _db.Students.FindAsync(Student.ID);
         if (s is null) return NotFound();
         _db.Students.Remove(s);
         await _db.SaveChangesAsync();

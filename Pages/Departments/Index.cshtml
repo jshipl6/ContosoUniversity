@@ -1,0 +1,29 @@
+﻿@page
+@model ContosoUniversity.Pages.Departments.IndexModel
+@{
+    ViewData["Title"] = "Departments";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Budget</th>
+            <th>Start date</th>
+            <th>Administrator</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var d in Model.Departments)
+        {
+            <tr>
+                <td>@d.Name</td>
+                <td>@d.Budget.ToString("C")</td>
+                <td>@d.StartDate.ToShortDateString()</td>
+                <td>@(d.Administrator?.FullName ?? "")</td>
+            </tr>
+        }
+    </tbody>
+</table>

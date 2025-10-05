@@ -1,17 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿namespace ContosoUniversity.Models;
 
-namespace ContosoUniversity.Models;
+public enum Grade { A = 4, B = 3, C = 2, D = 1, F = 0 }
 
 public class Enrollment
 {
-    public int Id { get; set; }
+    public int EnrollmentID { get; set; }
 
-    [Required]
-    public int StudentId { get; set; }
+    public int CourseID { get; set; }
+    public Course? Course { get; set; }
 
-    [Required]
-    public int CourseId { get; set; }
+    public int StudentID { get; set; }
+    public Student? Student { get; set; }
 
-    [Range(0, 100)]
-    public int? Grade { get; set; }
+    public Grade? Grade { get; set; }
 }
