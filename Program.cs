@@ -3,23 +3,22 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Razor Pages
+if (builder.Environment.IsDevelopment())
+{
+    builder.Configuration.AddUserSecrets<Program>();
+}
+
+var connectionString =
+    builder.Configuration.GetConnectionString("SchoolContext") ?? "Data Source=school.db";
+
+builder.Services.AddDbContext<SchoolContext>(options =>
+    options.UseSqlite(connectionString));
+
 builder.Services.AddRazorPages();
 
-// DbContext (SQLite). Falls back to local file if the connection string is missing.
-builder.Services.AddDbContext<SchoolContext>(options =>
-    options.UseSqlite(
-        builder.Configuration.GetConnectionString("SchoolContext")
-        ?? "Data Source=school.db"));
+builder.Services.AddHealthChecks();
 
 var app = builder.Build();
-
-// ---- Seed the database from Data/seed.xml (idempotent) ----
-using (var scope = app.Services.CreateScope())
-{
-    await SeedXml.EnsureSeededAsync(scope.ServiceProvider, app.Environment.ContentRootPath);
-}
-// ------------------------------------------------------------
 
 if (!app.Environment.IsDevelopment())
 {
@@ -29,13 +28,11 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
 
-await app.RunAsync();
+app.MapHealthChecks("/healthz");
 
-public partial class Program { }
-
+app.Run();
